@@ -3,11 +3,18 @@ import { Container, Row, Col, Card } from 'react-bootstrap'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import axios from 'axios';
+import AppURL from '../../api/AppURL';
+
+
 
 export class NewArrival extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            ProductData: [],
+        }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
     }
@@ -17,7 +24,47 @@ export class NewArrival extends Component {
     previous() {
         this.slider.slickPrev();
     }
+
+    componentDidMount() {
+        axios.get(AppURL.ProductListByRemark("New"))
+            .then(response => {
+                this.setState({ ProductData: response.data });
+            })
+            .catch(error => { })
+    }
+
+
     render() {
+
+        const NewList = this.state.ProductData;
+        const MyView = NewList.map((NewList, i) => {
+
+            if (NewList.special_price == "na") {
+                return <div>
+                    <Card className='image-box card'>
+                        <img className='center' src={NewList.image} />
+                        <Card.Body>
+                            <p className='product-name-on-card'>{NewList.title}</p>
+                            <p className='product-price-on-card'>Price: ₹{NewList.price}</p>
+                        </Card.Body>
+                    </Card>
+                </div>
+            }
+            else {
+                return <div>
+                    <Card className='image-box card'>
+                        <img className='center' src={NewList.image} />
+                        <Card.Body>
+                            <p className='product-name-on-card'>{NewList.title}</p>
+                            <p className='product-price-on-card'>Price:<del className="text-secondary">₹{NewList.price}</del>  ₹{NewList.special_price}</p>
+                        </Card.Body>
+                    </Card>
+                </div>
+            }
+
+        });
+
+
         var settings = {
             dots: false,
             infinite: true,
@@ -67,78 +114,7 @@ export class NewArrival extends Component {
                     </div>
                     <Row>
                         <Slider ref={slider => (this.slider = slider)} {...settings}>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
-                            <div>
-                                <Card className='image-box card'>
-                                    <img className='center' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                    <Card.Body>
-                                        <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                        <p className='product-price-on-card'>Price: ₹6,999</p>
-                                    </Card.Body>
-                                </Card>
-                            </div>
+                            {MyView}
                         </Slider>
                     </Row>
                 </Container>
