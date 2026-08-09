@@ -1,8 +1,57 @@
 import React, { Component, Fragment } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap'
+import axios from 'axios';
+import AppURL from '../../api/AppURL';
+
 
 export class Collection extends Component {
+    constructor() {
+        super();
+        this.state = {
+            ProductData: [],
+        }
+    }
+
+    componentDidMount() {
+        axios.get(AppURL.ProductListByRemark("Collection"))
+            .then(response => {
+                this.setState({ ProductData: response.data });
+            })
+            .catch(error => { })
+    }
+
+
     render() {
+
+        const CollectionList = this.state.ProductData;
+        const MyView = CollectionList.map((CollectionList, i) => {
+
+            if (CollectionList.special_price == "na") {
+                return <Col className='p-0' xl={3} lg={3} md={3} sm={6} xs={6}>
+                    <Card className='image-box card'>
+                        <img className='center w-75' src={CollectionList.image} />
+                        <Card.Body>
+                            <p className='product-name-on-card'>{CollectionList.title}</p>
+                            <p className='product-price-on-card'>Price: ₹{CollectionList.price}</p>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            }
+            else {
+                return <Col className='p-0' xl={3} lg={3} md={3} sm={6} xs={6}>
+                    <Card className='image-box card'>
+                        <img className='center w-75' src={CollectionList.image} />
+                        <Card.Body>
+                            <p className='product-name-on-card'>{CollectionList.title}</p>
+                            <p className='product-price-on-card'>Price:<del className="text-secondary">₹{CollectionList.price}</del>  ₹{CollectionList.special_price}</p>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            }
+
+        });
+
+
         return (
             <Fragment>
                 <Container className='text-center' fluid={true}>
@@ -10,45 +59,7 @@ export class Collection extends Component {
                         <p>Some of our featured products...</p>
                     </div>
                     <Row>
-                        <Col className='p-0' xl={3} lg={3} md={3} sm={6} xs={6}>
-                            <Card className='image-box card'>
-                                <img className='center w-75' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                <Card.Body>
-                                    <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                    <p className='product-price-on-card'>Price: ₹6,999</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className='p-0' xl={3} lg={3} md={3} sm={6} xs={6}>
-                            <Card className='image-box card'>
-                                <img className='center w-75' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                <Card.Body>
-                                    <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                    <p className='product-price-on-card'>Price: ₹6,999</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className='p-0' xl={3} lg={3} md={3} sm={6} xs={6}>
-                            <Card className='image-box card'>
-                                <img className='center w-75' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                <Card.Body>
-                                    <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                    <p className='product-price-on-card'>Price: ₹6,999</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className='p-0' xl={3} lg={3} md={3} sm={6} xs={6}>
-                            <Card className='image-box card'>
-                                <img className='center w-75' src='https://rukminim1.flixcart.com/image/1536/1536/xif0q/mobile/c/f/r/-original-imahmqgaggagex35.jpeg?q=90' />
-                                <Card.Body>
-                                    <p className='product-name-on-card'>Redmi 10A (Slate Grey, 32 GB)  (2 GB RAM)</p>
-                                    <p className='product-price-on-card'>Price: ₹6,999</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
+                        {MyView}
                     </Row>
                 </Container>
             </Fragment>
