@@ -2,13 +2,9 @@
 import React, { Component} from 'react'
 export class MegaMenu extends Component {
 
-    constructor() {
+    constructor(props) {
         super()
-        this.MegaMenu = this.MegaMenu.bind(this);
-    }
-
-    componentDidMount() {
-        this.MegaMenu();
+        
     }
 
     MegaMenu() {
@@ -30,162 +26,31 @@ export class MegaMenu extends Component {
     }
 
     render() {
+
+        const CatList = this.props.data;
+        const MyView = CatList.map((CatList,i)=>{
+            return <div key={i.toString()}>
+                 <button className='accordionAll'>
+                        <img className='accordionMenuIconAll' alt='icon' src={CatList.category_image} />&nbsp; {CatList.category_name}
+                    </button>
+                    <div className='panelAll'>
+                        <ul>
+                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
+                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+        });
+
+
+
+
+
         return (
             <div className='accordionMenuDivAll'>
                 <div className='accordionMenuDivInsideAll'>
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href='/'>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href='/'>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    <button className='accordionAll'>
-                        <img className='accordionMenuIconAll' alt='icon' src='https://cdn-icons-png.flaticon.com/512/1828/1828859.png' />&nbsp;Mobile & Tablet
-                    </button>
-                    <div className='panelAll'>
-                        <ul>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 1</a></li>
-                            <li><a className='accordionItemAll' href=''>Mobile & Tablet 2</a></li>
-                        </ul>
-                    </div>
-
-                    
-
-                    
+                    {MyView}
                 </div>
             </div>
         )
