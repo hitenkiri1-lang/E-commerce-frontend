@@ -1,8 +1,39 @@
 import React, { Component, Fragment } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap'
+import axios from 'axios';
+import AppURL from '../../api/AppURL';
+
 
 export class Categories extends Component {
+    constructor() {
+        super();
+        this.state = {
+            MenuData: []
+        }
+    }
+    componentDidMount() {
+        axios.get(AppURL.AllCategoryDetails)
+            .then(response => {
+                this.setState({ MenuData: response.data })
+            })
+            .catch(error => { })
+    }
+
     render() {
+        const CatList = this.state.MenuData;
+        const MyView = CatList.map((CatList, i) => {
+            return <Col key={i.toString()} className='p-0' key={1} xl={2} lg={2} md={2} sm={6} xs={6}>
+                <Card className='h-100 w-100 text-center'>
+
+                    <Card.Body>
+                        <img className='center' src={CatList.category_image} />
+                        <h5 className='category-name'>{CatList.category_name}</h5>
+                    </Card.Body>
+
+                </Card>
+            </Col>
+        })
+
         return (
             <Fragment>
                 <Container className='text-center' fluid={true}>
@@ -10,99 +41,7 @@ export class Categories extends Component {
                         <p>Some of our featured products...</p>
                     </div>
                     <Row>
-                        <Col key={1} xl={6} lg={6} md={6} sm={12} xs={12}>
-                            <Row>
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                            
-                            </Row>
-
-                        </Col>
-
-                        <Col key={1} xl={6} lg={6} md={6} sm={12} xs={12}>
-                            <Row>
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                                <Col className='p-0' key={1} xl={3} lg={3} md={3} sm={6} xs={6}>
-                                    <Card className='h-100 w-100 text-center'>
-                                        
-                                        <Card.Body>
-                                            <img className='center' src='https://static-assets-web.flixcart.com/apex-static/images/svgs/L1Nav/mobiles.svg' />
-                                            <h5 className='category-name'>Mobiles</h5>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-
-                            
-                            </Row>
-
-                        </Col>
+                        {MyView}
                     </Row>
                 </Container>
             </Fragment>
