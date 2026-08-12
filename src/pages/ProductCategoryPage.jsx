@@ -12,22 +12,22 @@ import AppURL from '../api/AppURL'
 export class ProductCategoryPage extends Component {
 
     constructor(props) {
-    super(props);
+        super(props);
 
-    this.state = {
-        Category: props.category,
-        ProductData: [],
-    };
-}
+        this.state = {
+            Category: props.category,
+            ProductData: [],
+        };
+    }
 
 
     componentDidMount() {
         window.scroll(0, 0)
         axios.get(AppURL.ProductListByCategory(this.state.Category))
-      .then(response => {
-        this.setState({ ProductData: response.data });
-      })
-      .catch(error => { })
+            .then(response => {
+                this.setState({ ProductData: response.data });
+            })
+            .catch(error => { })
     }
 
     render() {
