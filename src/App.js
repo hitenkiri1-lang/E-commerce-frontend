@@ -1,4 +1,4 @@
-import React, { Component,fragment} from 'react'
+import React, { Component,Fragment} from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import AppRoute from './route/AppRoute'
 
@@ -6,11 +6,11 @@ import AppRoute from './route/AppRoute'
 export class App extends Component {
   render() {
     return (
-      <fragment>
+      <Fragment>
         <BrowserRouter>
         <AppRoute></AppRoute>
         </BrowserRouter>
-      </fragment>
+      </Fragment>
     )
   }
 }

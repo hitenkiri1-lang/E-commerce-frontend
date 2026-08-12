@@ -57,5 +57,18 @@ export class ProductCategoryPage extends Component {
         )
     }
 }
+function ProductCategoryPageWrapper() {
 
-export default ProductCategoryPage
+    const { category } = useParams()
+
+    console.log("URL category:", category)
+
+    return (
+        <ProductCategoryPage
+            category={category}
+        />
+    )
+}
+
+
+export default ProductCategoryPageWrapper
