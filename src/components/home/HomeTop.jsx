@@ -1,50 +1,55 @@
 import React, { Component, Fragment } from 'react'
-import { Container, Row, Col,} from 'react-bootstrap'
+import { Container, Row, Col, } from 'react-bootstrap'
 import MegaMenu from './MegaMenu'
 import HomeSlider from './HomeSlider'
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
+import SliderLoading from '../PlaceHolder/SliderLoading';
 
 
 export class HomeTop extends Component {
-    constructor()
-    {
+    constructor() {
         super();
         this.state = {
-            MenuData:[],
-            SliderData:[]
+            MenuData: [],
+            SliderData: [],
+            isLoading: "",
+            mainDiv: "d-none"
         }
     }
     componentDidMount() {
         axios.get(AppURL.AllCategoryDetails)
-            .then(response =>{
-                this.setState({MenuData:response.data})
-             })
+            .then(response => {
+                this.setState({ MenuData: response.data })
+            })
             .catch(error => { })
-        
+
         axios.get(AppURL.AllSlider)
-            .then(response =>{
-                this.setState({SliderData:response.data})
-             })
+            .then(response => {
+                this.setState({ SliderData: response.data, isLoading: "d-none", mainDiv: "" })
+            })
             .catch(error => { })
     }
-  render() {
-    return (
-        <Fragment>
-            <Container className='p-0 m-0 overflow-hidden' fluid={true}>
-                <Row>
-                    <Col lg={3} md={3} sm={12} xs={12}>
-                        <MegaMenu data={this.state.MenuData} ></MegaMenu>
-                    </Col>
+    render() {
+        return (
+            <Fragment>
+                <SliderLoading isLoading={this.state.isLoading} />
+                <div className={this.state.mainDiv}>
+                    <Container className='p-0 m-0 overflow-hidden' fluid={true}>
+                        <Row>
+                            <Col lg={3} md={3} sm={12} xs={12}>
+                                <MegaMenu data={this.state.MenuData} ></MegaMenu>
+                            </Col>
 
-                    <Col lg={9} md={9} sm={12} xs={12}>
-                        <HomeSlider data={this.state.SliderData} ></HomeSlider>
-                    </Col>
-                </Row>
-            </Container>
-        </Fragment>
-    )
-  }
+                            <Col lg={9} md={9} sm={12} xs={12}>
+                                <HomeSlider data={this.state.SliderData} ></HomeSlider>
+                            </Col>
+                        </Row>
+                    </Container>
+                </div>
+            </Fragment>
+        )
+    }
 }
 
 export default HomeTop
