@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { Container, Row, Col, Card } from 'react-bootstrap'
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
+import CollectionLoading from '../PlaceHolder/CollectionLoading';
 
 
 export class Collection extends Component {
@@ -9,13 +10,18 @@ export class Collection extends Component {
         super();
         this.state = {
             ProductData: [],
+            isLoading: "",
+            mainDiv: "d-none"
         }
     }
 
     componentDidMount() {
         axios.get(AppURL.ProductListByRemark("Collection"))
             .then(response => {
-                this.setState({ ProductData: response.data });
+                this.setState({
+                    ProductData: response.data, isLoading: "d-none",
+                    mainDiv: ""
+                });
             })
             .catch(error => { })
     }
@@ -54,14 +60,17 @@ export class Collection extends Component {
 
         return (
             <Fragment>
-                <Container className='text-center' fluid={true}>
-                    <div className='section-title text-center mb-55'><h2>Product Collection</h2>
-                        <p>Some of our featured products...</p>
-                    </div>
-                    <Row>
-                        {MyView}
-                    </Row>
-                </Container>
+                <CollectionLoading isLoading={this.state.isLoading} />
+                <div className={this.state.mainDiv}>
+                    <Container className='text-center' fluid={true}>
+                        <div className='section-title text-center mb-55'><h2>Product Collection</h2>
+                            <p>Some of our featured products...</p>
+                        </div>
+                        <Row>
+                            {MyView}
+                        </Row>
+                    </Container>
+                </div>
             </Fragment>
         )
     }
