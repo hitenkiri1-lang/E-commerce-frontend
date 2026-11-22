@@ -5,37 +5,98 @@ import NavmenuDesktop from '../components/common/NavmenuDesktop'
 import NavmenuMobile from '../components/common/NavmenuMobile'
 import ProductDetails from '../components/ProductDetails/ProductDetails'
 import SuggestedProduct from '../components/ProductDetails/SuggestedProduct'
+import axios from 'axios'
+import AppURL from '../api/AppURL'
+import SliderLoading from '../components/PlaceHolder/SliderLoading'
 
 export class ProductDetailsPage extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            code: props.code,
+            ProductData: [],
+            isLoading: "",
+            mainDiv: "d-none"
+        };
+    }
+
+
     componentDidMount() {
         window.scroll(0, 0)
+
+        axios.get(AppURL.ProductDetails(this.state.code))
+            .then(response => {
+                this.setState({
+                    ProductData: response.data, isLoading: "d-none",
+                    mainDiv: ""
+                });
+            })
+            .catch(error => { })
     }
     render() {
-        return (
-            <Fragment>
-                <div className='Desktop'>
-                    <NavmenuDesktop></NavmenuDesktop>
-                </div>
-
-                <div className='Mobile'>
-                    <NavmenuMobile></NavmenuMobile>
-                </div>
 
 
-                <ProductDetails></ProductDetails>
-                <SuggestedProduct></SuggestedProduct>
+        if (this.state.mainDiv == "d-none") {
+            return (
+                <Fragment>
+                    <div className='Desktop'>
+                        <NavmenuDesktop></NavmenuDesktop>
+                    </div>
+
+                    <div className='Mobile'>
+                        <NavmenuMobile></NavmenuMobile>
+                    </div>
+
+                    <SliderLoading isLoading={this.state.isLoading}></SliderLoading>
+
+
+                    {/* <ProductDetails data={this.state.ProductData}></ProductDetails>
+                <SuggestedProduct></SuggestedProduct> */}
 
 
 
-                <div className='Desktop'>
-                    <FooterDesktop></FooterDesktop>
-                </div>
-                <div className='Mobile'>
-                    <FooterMobile></FooterMobile>
-                </div>
+                    <div className='Desktop'>
+                        <FooterDesktop></FooterDesktop>
+                    </div>
+                    <div className='Mobile'>
+                        <FooterMobile></FooterMobile>
+                    </div>
 
-            </Fragment>
-        )
+                </Fragment>
+            )
+        }
+        else {
+            return (
+                <Fragment>
+                    <div className='Desktop'>
+                        <NavmenuDesktop></NavmenuDesktop>
+                    </div>
+
+                    <div className='Mobile'>
+                        <NavmenuMobile></NavmenuMobile>
+                    </div>
+
+                    {/* <SliderLoading isLoading={this.state.isLoading}></SliderLoading> */}
+
+
+                    <ProductDetails data={this.state.ProductData}></ProductDetails>
+                    <SuggestedProduct></SuggestedProduct>
+
+
+
+                    <div className='Desktop'>
+                        <FooterDesktop></FooterDesktop>
+                    </div>
+                    <div className='Mobile'>
+                        <FooterMobile></FooterMobile>
+                    </div>
+
+                </Fragment>
+            )
+        }
+
     }
 }
 

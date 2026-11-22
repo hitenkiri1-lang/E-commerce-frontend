@@ -18,6 +18,11 @@ class AppURL {
 
     static AllSlider = this.BaseURL + "/allslider"
 
+
+    static ProductDetails(code) {
+        return this.BaseURL + "/productdetails/" + code;
+    }
+
 }
 
 export default AppURL
