@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css"
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
 import NewArrivalLoading from '../PlaceHolder/NewArrivalLoading'
+import { Link } from 'react-router-dom'
 
 
 
@@ -31,8 +32,10 @@ export class NewArrival extends Component {
     componentDidMount() {
         axios.get(AppURL.ProductListByRemark("New"))
             .then(response => {
-                this.setState({ ProductData: response.data,isLoading: "d-none",
-            mainDiv: "" });
+                this.setState({
+                    ProductData: response.data, isLoading: "d-none",
+                    mainDiv: ""
+                });
             })
             .catch(error => { })
     }
@@ -45,24 +48,28 @@ export class NewArrival extends Component {
 
             if (NewList.special_price == "na") {
                 return <div>
-                    <Card className='image-box card'>
-                        <img className='center' src={NewList.image} />
-                        <Card.Body>
-                            <p className='product-name-on-card'>{NewList.title}</p>
-                            <p className='product-price-on-card'>Price: ₹{NewList.price}</p>
-                        </Card.Body>
-                    </Card>
+                    <Link to={"/productdetails/" + NewList.id}>
+                        <Card className='image-box card'>
+                            <img className='center' src={NewList.image} />
+                            <Card.Body>
+                                <p className='product-name-on-card'>{NewList.title}</p>
+                                <p className='product-price-on-card'>Price: ₹{NewList.price}</p>
+                            </Card.Body>
+                        </Card>
+                    </Link>
                 </div>
             }
             else {
                 return <div>
-                    <Card className='image-box card'>
-                        <img className='center' src={NewList.image} />
-                        <Card.Body>
-                            <p className='product-name-on-card'>{NewList.title}</p>
-                            <p className='product-price-on-card'>Price:<del className="text-secondary">₹{NewList.price}</del>  ₹{NewList.special_price}</p>
-                        </Card.Body>
-                    </Card>
+                    <Link to={"/productdetails/" + NewList.id}>
+                        <Card className='image-box card'>
+                            <img className='center' src={NewList.image} />
+                            <Card.Body>
+                                <p className='product-name-on-card'>{NewList.title}</p>
+                                <p className='product-price-on-card'>Price:<del className="text-secondary">₹{NewList.price}</del>  ₹{NewList.special_price}</p>
+                            </Card.Body>
+                        </Card>
+                    </Link>
                 </div>
             }
 
@@ -110,20 +117,20 @@ export class NewArrival extends Component {
             <Fragment>
                 <NewArrivalLoading isLoading={this.state.isLoading} />
                 <div className={this.state.mainDiv}>
-                <Container className='text-center' fluid={true}>
-                    <div className='section-title text-center mb-55'><h2>New Arrival &nbsp;
-                        <a className='btn btn-sm ml-2 site-btn' onClick={this.previous}><i className='fas fa-arrow-left'></i></a>
-                        &nbsp;
-                        <a className='btn btn-sm ml-2 site-btn' onClick={this.next}><i className='fas fa-arrow-right'></i></a>
-                    </h2>
-                        <p>Some of our featured products...</p>
-                    </div>
-                    <Row>
-                        <Slider ref={slider => (this.slider = slider)} {...settings}>
-                            {MyView}
-                        </Slider>
-                    </Row>
-                </Container>
+                    <Container className='text-center' fluid={true}>
+                        <div className='section-title text-center mb-55'><h2>New Arrival &nbsp;
+                            <a className='btn btn-sm ml-2 site-btn' onClick={this.previous}><i className='fas fa-arrow-left'></i></a>
+                            &nbsp;
+                            <a className='btn btn-sm ml-2 site-btn' onClick={this.next}><i className='fas fa-arrow-right'></i></a>
+                        </h2>
+                            <p>Some of our featured products...</p>
+                        </div>
+                        <Row>
+                            <Slider ref={slider => (this.slider = slider)} {...settings}>
+                                {MyView}
+                            </Slider>
+                        </Row>
+                    </Container>
                 </div>
             </Fragment>
         )

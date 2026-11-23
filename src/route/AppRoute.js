@@ -30,7 +30,7 @@ export class AppRoute extends Component {
           <Route path="/about" element={<AboutPage />} />
 
 
-          <Route path="/productdetails" element={<ProductDetailsPage />} />
+          <Route path="/productdetails/:code" element={<ProductDetailsPage />} />
           <Route path="/notification" element={<NotificationPage />} />
           <Route path="/favourite" element={<FavouritePage />} />
           <Route path="/cart" element={<CartPage />} />
