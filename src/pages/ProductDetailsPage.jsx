@@ -8,6 +8,7 @@ import SuggestedProduct from '../components/ProductDetails/SuggestedProduct'
 import axios from 'axios'
 import AppURL from '../api/AppURL'
 import SliderLoading from '../components/PlaceHolder/SliderLoading'
+import { useParams } from 'react-router-dom'
 
 export class ProductDetailsPage extends Component {
 
@@ -33,7 +34,7 @@ export class ProductDetailsPage extends Component {
                     mainDiv: ""
                 });
             })
-            .catch(error => { })
+            .catch(error => {console.log("API Error:", error); })
     }
     render() {
 
@@ -100,4 +101,10 @@ export class ProductDetailsPage extends Component {
     }
 }
 
-export default ProductDetailsPage
+function ProductDetailsPageWrapper() {
+    const { code } = useParams();
+
+    return <ProductDetailsPage code={code} />;
+}
+
+export default ProductDetailsPageWrapper;

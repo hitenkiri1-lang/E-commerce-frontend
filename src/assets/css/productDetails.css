@@ -19,7 +19,7 @@
 
  .bigimage{
      height: 400px;
-     margin-left: 150px;
+     /* margin-left: 150px; */
  }
  .smallimage{
      height: 100px;
