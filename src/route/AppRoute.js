@@ -20,6 +20,9 @@ export class AppRoute extends Component {
       <Fragment>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          
+
+
           <Route path="/login" element={<UserLoginPage />} />
 
 
