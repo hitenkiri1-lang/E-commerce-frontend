@@ -31,7 +31,7 @@ export class AppRoute extends Component {
           <Route path="/login" element={<UserLoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgetpassword" element={<ForgetPasswordPage/>} />
-          <Route path="/resetpassword/:id" element={<ResetPasswordPage/>} />
+          <Route path="/reset/:id" element={<ResetPasswordPage/>} />
           <Route path="/profile" element={<ProfilePage/>} />
 
 
