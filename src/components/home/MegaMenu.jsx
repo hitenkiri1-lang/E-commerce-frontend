@@ -34,7 +34,7 @@ export class MegaMenu extends Component {
                     <ul>
                         {
                             (CatList.subcategory_name).map((SubList,i)=>{
-                                return <li><Link className='accordionItemAll' to={"productsubcategory/" + CatList.category_name+"/" + SubList.subcategory_name}>{SubList.subcategory_name}</Link></li>
+                                return <li><Link className='accordionItemAll' to={"/productsubcategory/" + CatList.category_name+"/" + SubList.subcategory_name}>{SubList.subcategory_name}</Link></li>
                             })
                         }
                     </ul>

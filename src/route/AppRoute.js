@@ -14,6 +14,10 @@ import AboutPage from '../pages/AboutPage';
 import ProductCategoryPage from '../pages/ProductCategoryPage';
 import ProductSubCategoryPage from '../pages/ProductSubCategoryPage';
 import SearchPage from '../pages/SearchPage';
+import RegisterPage from '../pages/RegisterPage';
+import ForgetPasswordPage from '../pages/ForgetPasswordPage';
+import ResetPasswordPage from '../pages/ResetPasswordPage';
+import ProfilePage from '../pages/ProfilePage';
 
 export class AppRoute extends Component {
   render() {
@@ -25,6 +29,10 @@ export class AppRoute extends Component {
 
 
           <Route path="/login" element={<UserLoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgetpassword" element={<ForgetPasswordPage/>} />
+          <Route path="/resetpassword/:id" element={<ResetPasswordPage/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
 
 
           <Route path="/contact" element={<ContactPage />} />
