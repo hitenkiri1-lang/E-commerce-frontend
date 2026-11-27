@@ -20,32 +20,43 @@ export class UserLogin extends Component {
     }
 
     formSubmit = (e) => {
-        e.preventDefault();
-        const data = {
-            email: this.state.email,
-            password: this.state.password,
-        }
-
-        axios.post(AppURL.UserLogin, data)
-            .then(response => {
-                localStorage.setItem('token', response.data.token);
-                this.props.setUser(response.data.user);
-                toast.success(response.data.message, { position: "top-right", autoClose: 1000 });
-                setTimeout(() => this.setState({ loggedIn: true }), 1000);
-            })
-            .catch(error => {
-                const errors = error.response?.data?.errors;
-                const msg = errors
-                    ? Object.values(errors)[0][0]
-                    : (error.response?.data?.message || 'Something went wrong. Please try again.');
-                toast.error(msg, { position: "top-right" });
-            });
+    e.preventDefault();
+    const data = {
+        email: this.state.email,
+        password: this.state.password,
     }
+
+    axios.post(AppURL.UserLogin, data)
+        .then(response => {
+            localStorage.setItem('token', response.data.token);
+            toast.success(response.data.message, { position: "top-right", autoClose: 1500 });
+
+            this.timer = setTimeout(() => {
+                this.props.setUser(response.data.user);
+                this.setState({ loggedIn: true });
+            }, 1500);
+        })
+        .catch(error => {
+            const errors = error.response?.data?.errors;
+            const msg = errors
+                ? Object.values(errors)[0][0]
+                : (error.response?.data?.message || 'Something went wrong. Please try again.');
+            toast.error(msg, { position: "top-right" });
+        });
+}
+
+componentWillUnmount() {
+    clearTimeout(this.timer);
+}
 
     render() {
 
         // Redirect to profile page if logged in
         if (this.state.loggedIn) {
+            return <Navigate to="/profile" />;
+        }
+
+        if (localStorage.getItem('token')) {
             return <Navigate to="/profile" />;
         }
         return (
@@ -80,7 +91,7 @@ export class UserLogin extends Component {
                         </Col>
                     </Row>
                 </Container>
-                <ToastContainer/>
+                <ToastContainer />
             </Fragment>
         )
     }

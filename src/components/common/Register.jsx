@@ -33,9 +33,12 @@ class Register extends Component {
         axios.post(AppURL.UserRegister, data)
             .then(response => {
                 localStorage.setItem('token', response.data.token);
-                this.props.setUser(response.data.user);
-                toast.success(response.data.message, { position: "top-right", autoClose: 1000 });
-                setTimeout(() => this.setState({ loggedIn: true }), 1000);
+                toast.success(response.data.message, { position: "top-right", autoClose: 1500 });
+
+                this.timer = setTimeout(() => {
+                    this.props.setUser(response.data.user);
+                    this.setState({ loggedIn: true });
+                }, 1500);
             })
             .catch(error => {
                 const errors = error.response?.data?.errors;
@@ -46,11 +49,20 @@ class Register extends Component {
             });
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.timer);
+    }
+
     render() {
         // Redirect to profile page if logged in
         if (this.state.loggedIn) {
             return <Navigate to="/profile" />;
         }
+
+        if (localStorage.getItem('token')) {
+            return <Navigate to="/profile" />;
+        }
+
         return (
             <Fragment>
                 <Container>

@@ -6,6 +6,10 @@ import Bars from '../../assets/images/bars.png'
 import { Link } from 'react-router-dom'
 import MegaMenuAll from '../home/MegaMenuAll'
 import { Navigate } from 'react-router-dom';
+import axios from 'axios';
+import AppURL from '../../api/AppURL';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export class NavmenuDesktop extends Component {
@@ -16,16 +20,23 @@ export class NavmenuDesktop extends Component {
       SideNavState: "sideNavClose",
       ContentOverState: "ContentOverlayClose",
       SearchKey: "",
-      SearchRedirectStatus: false
+      SearchRedirectStatus: false,
+      loggedOut: false
     }
     this.SearchOnChange = this.SearchOnChange.bind(this);
     this.SearchOnClick = this.SearchOnClick.bind(this);
     this.SearchRedirect = this.SearchRedirect.bind(this);
   }
 
-  logout = () =>{
-    localStorage.clear();
-  }
+  logout = () => {
+  const token = localStorage.getItem('token');
+
+  localStorage.clear();
+  this.setState({ loggedOut: true });  
+
+  toast.success('Successfully Logout', { position: "top-right", autoClose: 1500 });
+
+}
 
   SearchOnChange(event) {
     let SearchKey = event.target.value;
