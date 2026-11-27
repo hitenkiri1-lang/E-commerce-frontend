@@ -12,6 +12,8 @@ class ProfilePage extends Component {
     }
 
     render() {
+
+        const user = this.props.user;
         return (
             <Fragment>
                 <div className='Desktop'>
@@ -24,7 +26,7 @@ class ProfilePage extends Component {
 
 
 
-                <Profile></Profile>
+                <Profile user={user}></Profile>
 
 
                 <div className='Desktop'>

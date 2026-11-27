@@ -7,6 +7,10 @@ import '../src/assets/css/custom.css';
 import '../src/assets/css/fontawesome.css';
 import '../src/assets/css/animate.min.css';
 import '../src/assets/css/placeholder-loading.min.css';
+import axios from 'axios';
+
+// Set the base URL for axios requests
+axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
