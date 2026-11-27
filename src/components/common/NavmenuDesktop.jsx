@@ -23,6 +23,10 @@ export class NavmenuDesktop extends Component {
     this.SearchRedirect = this.SearchRedirect.bind(this);
   }
 
+  logout = () =>{
+    localStorage.clear();
+  }
+
   SearchOnChange(event) {
     let SearchKey = event.target.value;
     // alert(SearchKey);
@@ -71,7 +75,7 @@ export class NavmenuDesktop extends Component {
           <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>
           </Link>
           <Link to="/profile" className="h4 btn">Profile</Link>
-          <Link to="/register" className="h4 btn">Logout</Link>
+          <Link to="/" onClick={this.logout} className="h4 btn">Logout</Link>
 
           <Link to="/cart" className="cart-btn"><i className="fas fa-shopping-cart"></i> 3 Items</Link>
         </div>
