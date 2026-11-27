@@ -4,6 +4,8 @@ import Forget from '../../assets/images/forget.jpg'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ForgetPassword extends Component {
     constructor() {
@@ -11,7 +13,7 @@ class ForgetPassword extends Component {
         this.state = {
             email: '',
             message: '',
-            
+
         }
     }
 
@@ -23,12 +25,15 @@ class ForgetPassword extends Component {
 
         axios.post(AppURL.UserForgetPassword, data)
             .then(response => {
-                console.log(response);
+                this.setState({ message: response.data.message })
+                toast.success(this.state.message, { position: "top-right" });
             })
-            .catch(error => { 
-                console.log(error);
-             });
-        
+            .catch(error => {
+                const msg = error.response?.data?.message || 'Something went wrong. Please try again.';
+                this.setState({ message: msg });
+                toast.error(msg, { position: "top-right" });
+            });
+
     }
 
     render() {
@@ -41,9 +46,9 @@ class ForgetPassword extends Component {
                                 <Col md={6} lg={6} sm={12} xs={12} className='d-flex justify-content-center'>
                                     <Form className='onboardForm' onSubmit={this.formSubmit}>
                                         <h4 className='section-title-login'>Forget Password?</h4>
-                                    
+
                                         <input className='form-control m-2' type='email' placeholder='Enter Your Email' onChange={(e) => this.setState({ email: e.target.value })}></input>
-                                        
+
                                         <Button type='submit' className='btn btn-block m-2 site-btn-login'>Reset Password</Button>
                                         <br></br> <br></br>
                                         <hr />
@@ -58,6 +63,7 @@ class ForgetPassword extends Component {
                         </Col>
                     </Row>
                 </Container>
+                <ToastContainer />
             </Fragment>
         )
     }
