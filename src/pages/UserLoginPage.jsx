@@ -10,6 +10,10 @@ export class UserLoginPage extends Component {
     window.scroll(0, 0)
   }
     render() {
+
+        const setUser = this.props.setUser;
+        const user = this.props.user;
+
         return (
             <Fragment>
                 <div className='Desktop'>
@@ -22,7 +26,7 @@ export class UserLoginPage extends Component {
 
 
                 
-                <UserLogin></UserLogin>
+                <UserLogin setUser={setUser} user={user}></UserLogin>
 
 
 

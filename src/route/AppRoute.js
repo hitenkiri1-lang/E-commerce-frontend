@@ -52,8 +52,8 @@ export class AppRoute extends Component {
           
 
 
-          <Route path="/login" element={<UserLoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<UserLoginPage user={this.state.user} setUser={this.setUser} />} />
+          <Route path="/register" element={<RegisterPage user={this.state.user} setUser={this.setUser} />} />
           <Route path="/forgetpassword" element={<ForgetPasswordPage/>} />
           <Route path="/reset/:id" element={<ResetPasswordPage/>} />
           <Route path="/profile" element={<ProfilePage user={this.state.user} setUser={this.setUser}/>} />

@@ -32,6 +32,8 @@ class Register extends Component {
             .then(response => {
                 localStorage.setItem('token', response.data.token);
                 this.setState({ loggedIn: true });
+                // Fetch user data after successful registration
+                this.props.setUser(response.data.user);
             })
             .catch(error => { });
         
