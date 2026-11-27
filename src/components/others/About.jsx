@@ -24,7 +24,7 @@ export class About extends Component {
                     this.setState({ about: JsonData, loaderDiv: "d-none", mainDiv: "" });
                 }
             })
-            .catch(error => { })
+            .catch(error => { });
     }
     render() {
         return (
