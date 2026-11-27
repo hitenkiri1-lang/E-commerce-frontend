@@ -25,8 +25,8 @@ class ForgetPassword extends Component {
 
         axios.post(AppURL.UserForgetPassword, data)
             .then(response => {
-                this.setState({ message: response.data.message })
-                toast.success(this.state.message, { position: "top-right" });
+                this.setState({ message: response.data.message });
+                toast.success(response.data.message, { position: "top-right" });
             })
             .catch(error => {
                 const msg = error.response?.data?.message || 'Something went wrong. Please try again.';
