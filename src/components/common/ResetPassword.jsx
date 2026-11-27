@@ -2,8 +2,48 @@ import React, { Component, Fragment } from 'react'
 import { Col, Container, Row, Form, Button } from 'react-bootstrap'
 import Forget from '../../assets/images/forget.jpg'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
+import AppURL from '../../api/AppURL'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export class ResetPassword extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            token: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+            message: '',
+        }
+    }
+
+    formSubmit = (e) => {
+        e.preventDefault();
+        const data = {
+            token: this.state.token,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation
+        }
+
+        axios.post(AppURL.UserResetPassword, data)
+            .then(response => {
+                this.setState({ message: response.data.message });
+                toast.success(response.data.message, { position: "top-right" });
+                document.getElementById("formreset").reset();
+            })
+            .catch(error => {
+                const msg = error.response?.data?.message || 'Something went wrong. Please try again.';
+                this.setState({ message: msg });
+                toast.error(msg, { position: "top-right" });
+            });
+    }
+
+
     render() {
         return (
             <Fragment>
@@ -12,14 +52,18 @@ export class ResetPassword extends Component {
                         <Col md={12} lg={12} sm={12} xs={12} className='mt-2 shadow-sm rounded-lg bg-white'>
                             <Row className='text-center'>
                                 <Col md={6} lg={6} sm={12} xs={12} className='d-flex justify-content-center'>
-                                    <Form className='onboardForm'>
+                                    <Form className='onboardForm' onSubmit={this.formSubmit} id='formreset'>
                                         <h4 className='section-title-login'>Reset Password</h4>
-                                        <input className='form-control m-2' type='email' placeholder='Enter Your Pin Code'></input>
-                                        <input className='form-control m-2' type='email' placeholder='Enter Your Email'></input>
-                                        <input className='form-control m-2' type='password' placeholder='Your New Password'></input>
-                                        <input className='form-control m-2' type='password' placeholder='Confirm Your Password'></input>
-                                        <Button className='btn btn-block m-2 site-btn-login'>Reset Password</Button>
-                                        
+                                        <input className='form-control m-2' type='text' placeholder='Enter Your Pin Code' onChange={(e) => this.setState({ token: e.target.value })}></input>
+
+                                        <input className='form-control m-2' type='email' placeholder='Enter Your Email' onChange={(e) => this.setState({ email: e.target.value })}></input>
+
+                                        <input className='form-control m-2' type='password' placeholder='Your New Password' onChange={(e) => this.setState({ password: e.target.value })}></input>
+
+                                        <input className='form-control m-2' type='password' placeholder='Confirm Your Password' onChange={(e) => this.setState({ password_confirmation: e.target.value })}></input>
+
+                                        <Button type='submit' className='btn btn-block m-2 site-btn-login'>Reset Password</Button>
+
                                     </Form>
 
                                 </Col>
@@ -31,6 +75,7 @@ export class ResetPassword extends Component {
                         </Col>
                     </Row>
                 </Container>
+                <ToastContainer />
             </Fragment>
         )
     }

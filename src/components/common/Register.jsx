@@ -4,6 +4,8 @@ import Login from '../../assets/images/login.png'
 import { Link, Navigate } from 'react-router-dom'
 import axios from 'axios';
 import AppURL from '../../api/AppURL';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Register extends Component {
 
@@ -31,55 +33,61 @@ class Register extends Component {
         axios.post(AppURL.UserRegister, data)
             .then(response => {
                 localStorage.setItem('token', response.data.token);
-                this.setState({ loggedIn: true });
-                // Fetch user data after successful registration
                 this.props.setUser(response.data.user);
+                toast.success(response.data.message, { position: "top-right", autoClose: 1000 });
+                setTimeout(() => this.setState({ loggedIn: true }), 1000);
             })
-            .catch(error => { });
-        
+            .catch(error => {
+                const errors = error.response?.data?.errors;
+                const msg = errors
+                    ? Object.values(errors)[0][0]
+                    : (error.response?.data?.message || 'Something went wrong. Please try again.');
+                toast.error(msg, { position: "top-right" });
+            });
     }
 
-  render() {
-    // Redirect to profile page if logged in
-    if (this.state.loggedIn) {
-        return <Navigate to="/profile" />;
+    render() {
+        // Redirect to profile page if logged in
+        if (this.state.loggedIn) {
+            return <Navigate to="/profile" />;
+        }
+        return (
+            <Fragment>
+                <Container>
+                    <Row className='p-2'>
+                        <Col md={12} lg={12} sm={12} xs={12} className='mt-2 shadow-sm rounded-lg bg-white'>
+                            <Row className='text-center'>
+                                <Col md={6} lg={6} sm={12} xs={12} className='d-flex justify-content-center'>
+                                    <Form className='onboardForm' onSubmit={this.formSubmit}>
+                                        <h4 className='section-title-login'>User Registration</h4>
+                                        <input className='form-control m-2' type='text' placeholder='Enter Your Name' onChange={(e) => this.setState({ name: e.target.value })}></input>
+
+                                        <input className='form-control m-2' type='email' placeholder='Enter Your Email' onChange={(e) => this.setState({ email: e.target.value })}></input>
+
+                                        <input className='form-control m-2' type='password' placeholder='Enter Your Password' onChange={(e) => this.setState({ password: e.target.value })}></input>
+
+                                        <input className='form-control m-2' type='password' placeholder='Confirm Your Password' onChange={(e) => this.setState({ password_confirmation: e.target.value })}></input>
+
+                                        <Button type='submit' className='btn btn-block m-2 site-btn-login'>Register</Button>
+                                        <br></br> <br></br>
+                                        <hr />
+                                        <p><b>Already Have an Account? <Link to="/login">Login</Link></b></p>
+                                        <p><b>Forget Password? <Link to="/forgetpassword">Forgot Password</Link></b></p>
+                                    </Form>
+
+                                </Col>
+
+                                <Col md={6} lg={6} sm={6} xs={6} className='p-0 Desktop m-0'>
+                                    <img className='onboardBanner' src={Login} />
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+                <ToastContainer />
+            </Fragment>
+        )
     }
-    return (
-      <Fragment>
-            <Container>
-                <Row className='p-2'>
-                    <Col md={12} lg={12} sm={12} xs={12} className='mt-2 shadow-sm rounded-lg bg-white'>
-                        <Row className='text-center'>
-                            <Col md={6} lg={6} sm={12} xs={12} className='d-flex justify-content-center'>
-                                <Form className='onboardForm' onSubmit={this.formSubmit}>
-                                    <h4 className='section-title-login'>User Registration</h4>
-                                    <input className='form-control m-2' type='text' placeholder='Enter Your Name' onChange={(e) => this.setState({ name: e.target.value })}></input>
-
-                                    <input className='form-control m-2' type='email' placeholder='Enter Your Email' onChange={(e) => this.setState({ email: e.target.value })}></input>
-
-                                    <input className='form-control m-2' type='password' placeholder='Enter Your Password' onChange={(e) => this.setState({ password: e.target.value })}></input>
-
-                                    <input className='form-control m-2' type='password' placeholder='Confirm Your Password' onChange={(e) => this.setState({ password_confirmation: e.target.value })}></input>
-
-                                    <Button type='submit' className='btn btn-block m-2 site-btn-login'>Register</Button>
-                                    <br></br> <br></br>
-                                    <hr/>
-                                    <p><b>Already Have an Account? <Link to="/login">Login</Link></b></p>
-                                    <p><b>Forget Password? <Link to="/forgetpassword">Forgot Password</Link></b></p>
-                                </Form>
-
-                            </Col>
-
-                            <Col md={6} lg={6} sm={6} xs={6} className='p-0 Desktop m-0'>
-                                <img className='onboardBanner' src={Login}/>
-                            </Col> 
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
-        </Fragment>
-    )
-  }
 }
 
 export default Register
