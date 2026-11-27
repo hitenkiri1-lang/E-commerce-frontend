@@ -23,25 +23,21 @@ export class NavmenuDesktop extends Component {
     this.SearchRedirect = this.SearchRedirect.bind(this);
   }
 
-  SearchOnChange(event)
-  {
+  SearchOnChange(event) {
     let SearchKey = event.target.value;
     // alert(SearchKey);
-    this.setState({SearchKey: SearchKey});
+    this.setState({ SearchKey: SearchKey });
 
   }
-  SearchOnClick(){
-    if(this.state.SearchKey.length >= 2)
-    {
-      this.setState({SearchRedirectStatus: true});
+  SearchOnClick() {
+    if (this.state.SearchKey.length >= 2) {
+      this.setState({ SearchRedirectStatus: true });
     }
   }
 
-  SearchRedirect()
-  {
-    if(this.state.SearchRedirectStatus === true)
-    {
-      return(
+  SearchRedirect() {
+    if (this.state.SearchRedirectStatus === true) {
+      return (
         <Navigate to={"/productbysearch/" + this.state.SearchKey} />
       )
     }
@@ -66,6 +62,36 @@ export class NavmenuDesktop extends Component {
     }
   }
   render() {
+    let buttons;
+    if (localStorage.getItem('token')) {
+      buttons = (
+        <div>
+          <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i><sup><span className="badge text-white bg-danger">5</span></sup>
+          </Link>
+          <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>
+          </Link>
+          <Link to="/profile" className="h4 btn">Profile</Link>
+          <Link to="/register" className="h4 btn">Logout</Link>
+
+          <Link to="/cart" className="cart-btn"><i className="fas fa-shopping-cart"></i> 3 Items</Link>
+        </div>
+      )
+    }
+    else {
+      buttons = (
+        <div>
+          <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i><sup><span className="badge text-white bg-danger">5</span></sup>
+          </Link>
+          <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>
+          </Link>
+          <Link to="/login" className="h4 btn">Login</Link>
+          <Link to="/register" className="h4 btn">Register</Link>
+
+          <Link to="/cart" className="cart-btn"><i className="fas fa-shopping-cart"></i> 3 Items</Link>
+        </div>
+      )
+
+    }
     return (
       <Fragment>
         <div className='TopSectionDown'>
@@ -89,14 +115,7 @@ export class NavmenuDesktop extends Component {
                 </Col>
 
                 <Col className='p-1 mt-1' lg={4} md={4} sm={12} xs={12}>
-                  <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i><sup><span className="badge text-white bg-danger">5</span></sup>
-                  </Link>
-                  <Link to="/notification" className="btn"><i className="fa h4 fa-bell"></i><sup><span className="badge text-white bg-danger">5</span></sup>
-                  </Link>
-                  <Link to="/login" className="h4 btn">Login</Link>
-                  <Link to="/register" className="h4 btn">Register</Link>
-                  
-                  <Link to="/cart" className="cart-btn"><i className="fas fa-shopping-cart"></i> 3 Items</Link>
+                  {buttons}
                 </Col>
               </Row>
               {this.SearchRedirect()}
