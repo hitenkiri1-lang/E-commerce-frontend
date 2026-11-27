@@ -1,10 +1,47 @@
 import React, { Component, Fragment } from 'react'
 import { Col, Container, Row, Form, Button } from 'react-bootstrap'
 import Login from '../../assets/images/login.png'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import axios from 'axios';
+import AppURL from '../../api/AppURL';
 
 class Register extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            name: '',
+            email: '',
+            password: '',
+            password_confirmation: '',
+            message: '',
+            loggedIn: false
+        }
+    }
+
+    formSubmit = (e) => {
+        e.preventDefault();
+        const data = {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            password_confirmation: this.state.password_confirmation
+        }
+
+        axios.post(AppURL.UserRegister, data)
+            .then(response => {
+                localStorage.setItem('token', response.data.token);
+                this.setState({ loggedIn: true });
+            })
+            .catch(error => { });
+        
+    }
+
   render() {
+    // Redirect to profile page if logged in
+    if (this.state.loggedIn) {
+        return <Navigate to="/profile" />;
+    }
     return (
       <Fragment>
             <Container>
@@ -12,13 +49,17 @@ class Register extends Component {
                     <Col md={12} lg={12} sm={12} xs={12} className='mt-2 shadow-sm rounded-lg bg-white'>
                         <Row className='text-center'>
                             <Col md={6} lg={6} sm={12} xs={12} className='d-flex justify-content-center'>
-                                <Form className='onboardForm'>
+                                <Form className='onboardForm' onSubmit={this.formSubmit}>
                                     <h4 className='section-title-login'>User Registration</h4>
-                                    <input className='form-control m-2' type='text' placeholder='Enter Your Name'></input>
-                                    <input className='form-control m-2' type='email' placeholder='Enter Your Email'></input>
-                                    <input className='form-control m-2' type='password' placeholder='Enter Your Password'></input>
-                                    <input className='form-control m-2' type='password' placeholder='Confirm Your Password'></input>
-                                    <Button className='btn btn-block m-2 site-btn-login'>Register</Button>
+                                    <input className='form-control m-2' type='text' placeholder='Enter Your Name' onChange={(e) => this.setState({ name: e.target.value })}></input>
+
+                                    <input className='form-control m-2' type='email' placeholder='Enter Your Email' onChange={(e) => this.setState({ email: e.target.value })}></input>
+
+                                    <input className='form-control m-2' type='password' placeholder='Enter Your Password' onChange={(e) => this.setState({ password: e.target.value })}></input>
+
+                                    <input className='form-control m-2' type='password' placeholder='Confirm Your Password' onChange={(e) => this.setState({ password_confirmation: e.target.value })}></input>
+
+                                    <Button type='submit' className='btn btn-block m-2 site-btn-login'>Register</Button>
                                     <br></br> <br></br>
                                     <hr/>
                                     <p><b>Already Have an Account? <Link to="/login">Login</Link></b></p>
