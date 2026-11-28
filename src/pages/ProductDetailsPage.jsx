@@ -4,7 +4,6 @@ import FooterMobile from '../components/common/FooterMobile'
 import NavmenuDesktop from '../components/common/NavmenuDesktop'
 import NavmenuMobile from '../components/common/NavmenuMobile'
 import ProductDetails from '../components/ProductDetails/ProductDetails'
-import SuggestedProduct from '../components/ProductDetails/SuggestedProduct'
 import axios from 'axios'
 import AppURL from '../api/AppURL'
 import SliderLoading from '../components/PlaceHolder/SliderLoading'
@@ -83,7 +82,7 @@ export class ProductDetailsPage extends Component {
 
 
                     <ProductDetails data={this.state.ProductData}></ProductDetails>
-                    <SuggestedProduct></SuggestedProduct>
+                    
 
 
 

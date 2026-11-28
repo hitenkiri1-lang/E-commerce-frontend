@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/styles.min.css';
+import SuggestedProduct from './SuggestedProduct'
+
 
 export class ProductDetails extends Component {
 
@@ -203,6 +205,8 @@ export class ProductDetails extends Component {
                         </Col>
                     </Row>
                 </Container>
+
+                <SuggestedProduct subcategory={subcategory}></SuggestedProduct>
 
             </Fragment>
         )
