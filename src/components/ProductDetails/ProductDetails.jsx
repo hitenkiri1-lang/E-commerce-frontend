@@ -3,18 +3,22 @@ import { Col, Container, Row, } from 'react-bootstrap'
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
+import InnerImageZoom from 'react-inner-image-zoom';
+import 'react-inner-image-zoom/lib/styles.min.css';
 
 export class ProductDetails extends Component {
 
     constructor() {
         super();
+        this.state = {
+            previewImg: "0"
+        }
     }
 
 
     imageOnClick = (event) => {
         let imagesrc = event.target.getAttribute('src');
-        let previewImg = document.getElementById('previewImg');
-        previewImg.setAttribute('src', imagesrc);
+        this.setState({ previewImg: imagesrc })
     }
 
     PriceOption(price, special_price) {
@@ -23,7 +27,7 @@ export class ProductDetails extends Component {
         } else {
             return (
                 <p className="product-name-on-card">Price: <strike className="text-secondary">₹{price}</strike>  ₹{special_price}</p>
-                
+
             );
         }
     }
@@ -42,6 +46,10 @@ export class ProductDetails extends Component {
         let price = ProductAllData['productList'][0]['price'];
         let special_price = ProductAllData['productList'][0]['special_price'];
         let star = ProductAllData['productList'][0]['star'];
+
+        if (this.state.previewImg === "0") {
+            this.setState({ previewImg: image })
+        }
 
         //PRODUCTDETAILS TABLE DATA
         let short_description = ProductAllData['productDetails'][0]['short_description'];
@@ -96,7 +104,11 @@ export class ProductDetails extends Component {
                         <Col className="shadow-sm bg-white pb-3 mt-4" md={12} lg={12} sm={12} xs={12}>
                             <Row>
                                 <Col className="p-3" md={6} lg={6} sm={12} xs={12}>
-                                    <img id="previewImg" className="w-100 bigimage" src={image_one} />
+
+
+
+                                    <InnerImageZoom className="detailimage" zoomScale={1.8} zoomType="hover" src={this.state.previewImg} zoomSrc={this.state.previewImg} />
+
                                     <Container className="my-3">
                                         <Row>
                                             <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
@@ -143,7 +155,7 @@ export class ProductDetails extends Component {
                                             {SizeOption}
                                         </select>
                                     </div>
-                                    
+
                                     <div className="">
                                         <h6 className="mt-2">Choose Quantity</h6>
                                         <select className="form-control form-select">
